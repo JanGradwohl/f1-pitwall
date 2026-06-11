@@ -1,0 +1,24 @@
+{
+  "name": "f1-pitwall",
+  "version": "1.0.0",
+  "description": "Self-hosted F1 live timing display. Single-file frontend + zero-dependency Node proxy with caching and rate limiting.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Jan Gradwohl",
+  "license": "MIT",
+  "keywords": [
+    "formula1",
+    "f1",
+    "live-timing",
+    "openf1",
+    "ergast",
+    "jolpica",
+    "dashboard",
+    "self-hosted"
+  ]
+}
