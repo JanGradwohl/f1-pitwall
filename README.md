@@ -2,6 +2,8 @@
 
 A self-hosted Formula 1 live timing display. Idle countdown and standings between races, automatic switch into a live timing tower + telemetry-drawn track map during sessions, and an offline rewatch mode for any past Grand Prix.
 
+**Live demo:** https://jangradwohl.github.io/f1-pitwall/
+
 ![F1 Pit Wall - Idle View](docs/idle.gif)
 
 Single HTML file for the frontend, a small Node proxy for caching and rate limiting. No build step, no npm dependencies, no framework.
@@ -13,7 +15,7 @@ Single HTML file for the frontend, a small Node proxy for caching and rate limit
 Requires Node 18+ (uses the built-in `fetch`/`URL`/`https` only).
 
 ```bash
-git clone https://github.com/<you>/f1-pitwall.git
+git clone https://github.com/JanGradwohl/f1-pitwall.git
 cd f1-pitwall
 node server.js
 # open http://localhost:8000
@@ -25,15 +27,22 @@ The frontend can also be opened directly as a static file, but the proxy is reco
 
 ### Hosting it online (free tier)
 
-Render works without any tweaks:
+**GitHub Pages (static, zero-cost, no server).** The frontend defaults to calling the OpenF1 and Jolpica APIs directly, and only switches to the bundled proxy if a `/api/health` endpoint answers on the same origin. Both APIs send `Access-Control-Allow-Origin: *`, so the page works as a pure static site:
 
 1. Push the repo to GitHub.
-2. On render.com, create a *Web Service* from the repo.
+2. Settings → Pages → Source: *Deploy from a branch* → `main` / `/ (root)`.
+3. It goes live at `https://<user>.github.io/f1-pitwall/`.
+
+The trade-off is that there's no shared cache or rate limiting — each viewer's browser hits the upstreams directly (well within the ~30 req/min budget for a single display).
+
+**Render (runs the Node proxy, for caching + rate limiting).**
+
+1. On render.com, create a *Web Service* from the repo.
    - Runtime: Node
    - Build command: *(leave empty)*
    - Start command: `node server.js`
    - Plan: Free.
-3. The service goes to sleep after 15 min of inactivity. To keep it warm, point any free cron service at `https://<your-app>.onrender.com/api/health` every 10 minutes.
+2. The service goes to sleep after 15 min of inactivity. To keep it warm, point any free cron service at `https://<your-app>.onrender.com/api/health` every 10 minutes.
 
 ### Keyboard shortcuts
 
